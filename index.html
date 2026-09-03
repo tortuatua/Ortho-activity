@@ -1,0 +1,84 @@
+<!DOCTYPE html><html lang="th"><head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="default">
+<meta name="apple-mobile-web-app-title" content="ตาราง">
+<title>ตารางกิจกรรม</title>
+<style>
+:root{--bg:#F6F7F8;--c:#fff;--t:#1A1D21;--m:#6B7280;--l:#E3E6E9}
+@media(prefers-color-scheme:dark){:root{--bg:#121417;--c:#1B1E22;--t:#E9ECEF;--m:#9AA1A9;--l:#2A2E33}}
+*{box-sizing:border-box}
+body{margin:0 auto;padding:22px 14px 44px;max-width:520px;background:var(--bg);color:var(--t);
+font:400 15px/1.6 -apple-system,'Noto Sans Thai',sans-serif;-webkit-text-size-adjust:100%}
+h1{font-size:16px;font-weight:600;margin:0 0 16px}
+#hd{background:var(--c);border:1px solid var(--l);border-radius:14px;padding:16px 18px;margin-bottom:18px}
+#w{font-size:13px;color:var(--m)}
+#b{font-size:46px;font-weight:600;line-height:1.1;margin:4px 0 0;letter-spacing:-.02em}
+#x{font-size:13px;color:var(--m)}
+#p{display:flex;flex-wrap:wrap;gap:6px;margin-bottom:18px}
+#p button{font:inherit;font-size:14px;padding:7px 13px;border-radius:99px;
+border:1px solid var(--l);background:var(--c);color:var(--t)}
+#p button.on{background:var(--t);color:var(--bg);border-color:var(--t)}
+table{width:100%;border-collapse:collapse;table-layout:fixed}
+th{font-size:12px;font-weight:400;color:var(--m);padding-bottom:6px}
+th:first-child{width:72px}
+td{padding:2px}td.m{font-size:12px;color:var(--m);text-align:right;padding-right:6px}
+div.k{border-radius:7px;padding:9px 0;text-align:center;font-size:13px;font-weight:600}
+.a505{background:#E7EAF7;color:#2F3E7E}.a506{background:#DDEFE8;color:#146152}
+.a507{background:#FAEBDD;color:#8A4E17}.a510{background:#EAE6F5;color:#4A3A80}
+.aOPD{background:#FBE6E2;color:#963E28}
+.ax{color:var(--m);border:1px dashed var(--l);font-weight:400}
+@media(prefers-color-scheme:dark){
+.a505{background:#2C3566;color:#C3CBF0}.a506{background:#14453C;color:#9FDCC9}
+.a507{background:#5A3312;color:#F2C795}.a510{background:#382C63;color:#C9BEEC}
+.aOPD{background:#5E2718;color:#F3B6A4}}
+#f{font-size:12px;color:var(--m);margin-top:18px;line-height:1.7}
+</style></head><body>
+<h1>ตารางกิจกรรม</h1>
+<div id="hd"><div id="w"></div><div id="b"></div><div id="x"></div></div>
+<div id="p"></div>
+<table><thead><tr><th></th><th>จ</th><th>อ</th><th>พ</th><th>พฤ</th><th>ศ</th></tr></thead>
+<tbody id="g"></tbody></table>
+<div id="f"></div>
+<script>
+var B={"ชัชรินทร์":["510","506","507","505","OPD"],"วัชรวิชญ์":["505","507","506","OPD","510"],
+"ปวริศร์":["506","OPD","510","507","505"],"วรินทร":["507","505","OPD","510","506"],
+"ณภัทร์":["OPD","510","505","506","507"]};
+var M=[["กรกฎาคม 69",2026,6],["สิงหาคม 69",2026,7],["กันยายน 69",2026,8],["ตุลาคม 69",2026,9],
+["พฤศจิกายน 69",2026,10],["ธันวาคม 69",2026,11],["มกราคม 70",2027,0]];
+var DF=["จันทร์","อังคาร","พุธ","พฤหัสบดี","ศุกร์"],DS=["จ","อ","พ","พฤ","ศ"];
+var SH=["ม.ค.","ก.พ.","มี.ค.","เม.ย.","พ.ค.","มิ.ย.","ก.ค.","ส.ค.","ก.ย.","ต.ค.","พ.ย.","ธ.ค."];
+var A={"505":1,"506":1,"507":1},c="ชัชรินทร์";
+try{var v=localStorage.getItem("who");if(v&&B[v])c=v}catch(e){}
+function S(n,m,d){return B[n][((d-m)%5+5)%5]}
+var N=new Date(),tm=-1,td=-1,wd=N.getDay();
+for(var i=0;i<M.length;i++)if(M[i][1]==N.getFullYear()&&M[i][2]==N.getMonth())tm=i;
+if(wd>0&&wd<6)td=wd-1;
+function R(){
+var p=document.getElementById("p");p.innerHTML="";
+Object.keys(B).forEach(function(n){var b=document.createElement("button");
+b.textContent=n;if(n==c)b.className="on";
+b.onclick=function(){c=n;try{localStorage.setItem("who",n)}catch(e){}R()};p.appendChild(b)});
+var dd=N.getDate()+" "+SH[N.getMonth()]+" "+(N.getFullYear()+543)%100;
+var W=document.getElementById("w"),G=document.getElementById("b"),X=document.getElementById("x");
+W.textContent="วันนี้ "+dd;
+if(tm<0){G.textContent="—";X.textContent="นอกช่วงตาราง"}
+else if(td<0){G.textContent="—";X.textContent="เสาร์–อาทิตย์ ไม่มีตาราง"}
+else{var s=S(c,tm,td);W.textContent="วันนี้ "+DF[td]+" "+dd;
+if(td==3&&A[s]){G.textContent="acad";X.textContent="ห้อง "+s+" ปิดวันพฤหัส ว่างทั้งวัน"}
+else{G.textContent=s;X.textContent=(s=="OPD"?"ออกตรวจผู้ป่วยนอก":"ห้อง "+s)+" — "+M[tm][0]}}
+var g=document.getElementById("g");g.innerHTML="";
+for(var m=0;m<7;m++){var tr=g.insertRow(),t0=tr.insertCell();
+t0.className="m";t0.textContent=M[m][0];
+for(var d=0;d<5;d++){var s2=S(c,m,d),o=(d==3&&A[s2]),c2=tr.insertCell(),k=document.createElement("div");
+k.className="k "+(o?"ax":"a"+s2);k.textContent=o?"acad":s2;
+if(m==tm&&d==td)k.style.outline="2px solid currentColor";
+c2.appendChild(k)}}
+var fr=0,op=[];
+for(var m=0;m<7;m++){if(A[S(c,m,3)])fr++;
+for(var d=0;d<5;d++)if(S(c,m,d)=="OPD")op.push(DS[d])}
+document.getElementById("f").textContent=
+c+" ว่างวันพฤหัส "+fr+"/7 เดือน · OPD ตกวัน "+op.join(" ")+" · วนซ้ำทุก 5 เดือน";
+}
+R();
+</script></body></html>
